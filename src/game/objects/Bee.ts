@@ -12,11 +12,11 @@ export class Bee {
     y: number,
     index: number
   ) {
-    this.speed = 125 + index * 5;
+    this.speed = 92 + index * 4;
     this.body = scene.matter.add.circle(x, y, 18, {
       label: 'bee',
-      restitution: 0.95,
-      frictionAir: 0.035,
+      restitution: 0.88,
+      frictionAir: 0.05,
       friction: 0,
       frictionStatic: 0
     });
@@ -34,16 +34,16 @@ export class Bee {
     const dx = targetX - this.body.position.x;
     const dy = targetY - this.body.position.y;
     const length = Math.max(1, Math.hypot(dx, dy));
-    const wobble = Math.sin(time / 220 + this.body.id) * 0.45;
+    const wobble = Math.sin(time / 260 + this.body.id) * 0.4;
     const desired = {
-      x: (dx / length) * this.speed + Math.cos(wobble) * 18,
-      y: (dy / length) * this.speed + Math.sin(wobble) * 18
+      x: (dx / length) * this.speed + Math.cos(wobble) * 12,
+      y: (dy / length) * this.speed + Math.sin(wobble) * 12
     };
     const velocity = this.body.velocity;
 
     this.scene.matter.body.setVelocity(this.body, {
-      x: Phaser.Math.Linear(velocity.x, desired.x, 0.055),
-      y: Phaser.Math.Linear(velocity.y, desired.y, 0.055)
+      x: Phaser.Math.Linear(velocity.x, desired.x, 0.045),
+      y: Phaser.Math.Linear(velocity.y, desired.y, 0.045)
     });
   }
 

@@ -6,7 +6,7 @@ export class DrawBarrier {
   private readonly bodies: MatterJS.BodyType[] = [];
   private readonly graphics: Phaser.GameObjects.Graphics;
 
-  constructor(scene: Phaser.Scene, points: DrawPoint[], thickness = 22) {
+  constructor(scene: Phaser.Scene, points: DrawPoint[], thickness = 28) {
     const simplified = LineBuilder.simplify(points);
     const segments = LineBuilder.toSegments(simplified, thickness);
 
@@ -23,7 +23,7 @@ export class DrawBarrier {
       const body = scene.matter.add.rectangle(segment.x, segment.y, segment.length, segment.thickness, {
         isStatic: true,
         label: 'barrier',
-        restitution: 0.75,
+        restitution: 0.6,
         friction: 0,
         angle: segment.angle
       });

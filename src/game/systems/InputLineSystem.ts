@@ -115,7 +115,7 @@ export class InputLineSystem {
 
   private redrawPreview(invalid: boolean): void {
     this.graphics.clear();
-    this.graphics.lineStyle(18, invalid ? 0xd94c3d : 0x3c2a21, 0.86);
+    this.graphics.lineStyle(22, invalid ? 0xd94c3d : 0x3c2a21, 0.86);
     this.graphics.beginPath();
     this.graphics.moveTo(this.points[0].x, this.points[0].y);
     for (const point of this.points.slice(1)) {
@@ -126,7 +126,7 @@ export class InputLineSystem {
 
   private drawInvalid(points: DrawPoint[]): void {
     this.graphics.clear();
-    this.graphics.lineStyle(18, 0xd94c3d, 0.9);
+    this.graphics.lineStyle(22, 0xd94c3d, 0.9);
     this.graphics.beginPath();
     this.graphics.moveTo(points[0].x, points[0].y);
     for (const point of points.slice(1)) {
