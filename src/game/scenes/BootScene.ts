@@ -8,6 +8,7 @@ export class BootScene extends Phaser.Scene {
   }
 
   preload(): void {
+    this.load.image(AssetKeys.BackgroundMain, '/assets/images/background-main.jpg');
     this.load.image(AssetKeys.DogIdle, '/assets/images/dog-idle.jpg');
     this.load.image(AssetKeys.DogScared, '/assets/images/dog-scared.jpg');
     this.load.image(AssetKeys.DogHappy, '/assets/images/dog-happy.jpg');

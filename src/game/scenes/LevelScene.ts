@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { AssetKeys } from '../config/assetKeys';
 import { GAME_HEIGHT, GAME_WIDTH } from '../config/gameConfig';
 import { Dog } from '../objects/Dog';
 import { DrawBarrier } from '../objects/DrawBarrier';
@@ -73,9 +74,11 @@ export class LevelScene extends Phaser.Scene {
   }
 
   private addBackground(): void {
-    this.add.rectangle(GAME_WIDTH / 2, GAME_HEIGHT / 2, GAME_WIDTH, GAME_HEIGHT, 0xf8dda0);
-    this.add.circle(92, 110, 70, 0xfff4c6, 0.65);
-    this.add.rectangle(GAME_WIDTH / 2, GAME_HEIGHT - 88, GAME_WIDTH, 176, 0x8dcc78);
+    this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, AssetKeys.BackgroundMain)
+      .setDisplaySize(GAME_WIDTH, GAME_HEIGHT)
+      .setDepth(-10);
+    this.add.rectangle(GAME_WIDTH / 2, GAME_HEIGHT / 2, GAME_WIDTH, GAME_HEIGHT, 0xffffff, 0.05)
+      .setDepth(-9);
   }
 
   private createLevelObjects(): void {

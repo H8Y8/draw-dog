@@ -74,13 +74,13 @@ export class UIScene extends Phaser.Scene {
 
     const backing = this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, AssetKeys.UiResultPanel)
       .setDisplaySize(480, 374);
-    const title = this.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 130, payload.result === 'win' ? 'Success' : 'Try Again', {
+    const title = this.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 118, payload.result === 'win' ? 'Success' : 'Try Again', {
       fontFamily: 'Arial, sans-serif',
       fontSize: '48px',
       color: '#3a2b1f',
       fontStyle: 'bold'
     }).setOrigin(0.5);
-    const message = this.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 58, payload.message, {
+    const message = this.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 42, payload.message, {
       fontFamily: 'Arial, sans-serif',
       fontSize: '28px',
       color: '#604a34'
@@ -88,7 +88,7 @@ export class UIScene extends Phaser.Scene {
 
     const retry = this.createButton(
       GAME_WIDTH / 2,
-      GAME_HEIGHT / 2 + 38,
+      GAME_HEIGHT / 2 + 52,
       'Retry',
       () => {
         this.scene.stop(SceneKeys.UI);
@@ -99,7 +99,7 @@ export class UIScene extends Phaser.Scene {
     const next = payload.result === 'win'
       ? this.createButton(
           GAME_WIDTH / 2,
-          GAME_HEIGHT / 2 + 142,
+          GAME_HEIGHT / 2 + 150,
           'Next',
           () => {
             this.scene.stop(SceneKeys.UI);

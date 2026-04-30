@@ -15,7 +15,7 @@ export class Dog {
     });
 
     this.image = scene.add
-      .image(x, y, AssetKeys.DogIdle)
+      .image(x, y - 8, AssetKeys.DogIdle)
       .setDisplaySize(136, 136)
       .setDepth(5);
   }
@@ -31,11 +31,13 @@ export class Dog {
   setScared(scared: boolean): void {
     this.image.setTexture(scared ? AssetKeys.DogScared : AssetKeys.DogIdle);
     this.image.setScale(scared ? 1.04 : 1);
+    this.image.setY(this.body.position.y - 8);
   }
 
   setHappy(): void {
     this.image.setTexture(AssetKeys.DogHappy);
     this.image.setScale(1.04);
+    this.image.setY(this.body.position.y - 8);
   }
 
   destroy(): void {

@@ -1,4 +1,5 @@
 export const AssetKeys = {
+  BackgroundMain: 'background-main',
   DogIdle: 'dog-idle',
   DogScared: 'dog-scared',
   DogHappy: 'dog-happy',

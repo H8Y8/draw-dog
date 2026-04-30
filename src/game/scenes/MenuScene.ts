@@ -41,13 +41,16 @@ export class MenuScene extends Phaser.Scene {
       this.audioLabel?.setText(`Sound: ${next ? 'On' : 'Off'}`);
     }, (label) => {
       this.audioLabel = label;
+      label.setFontSize('30px');
     });
   }
 
   private addBackground(): void {
-    this.add.rectangle(GAME_WIDTH / 2, GAME_HEIGHT / 2, GAME_WIDTH, GAME_HEIGHT, 0xf7dc97);
-    this.add.circle(120, 180, 95, 0xfff0bf, 0.45);
-    this.add.rectangle(GAME_WIDTH / 2, 1120, GAME_WIDTH, 320, 0x85c978);
+    this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, AssetKeys.BackgroundMain)
+      .setDisplaySize(GAME_WIDTH, GAME_HEIGHT)
+      .setDepth(-10);
+    this.add.rectangle(GAME_WIDTH / 2, GAME_HEIGHT / 2, GAME_WIDTH, GAME_HEIGHT, 0xffffff, 0.08)
+      .setDepth(-9);
   }
 
   private createButton(
