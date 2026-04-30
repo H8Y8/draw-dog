@@ -1,0 +1,73 @@
+import Phaser from 'phaser';
+import { GAME_HEIGHT, GAME_WIDTH } from '../config/gameConfig';
+import { AudioSystem } from '../systems/AudioSystem';
+import { LevelLoader } from '../systems/LevelLoader';
+import { SceneKeys } from '../types/game';
+
+export class MenuScene extends Phaser.Scene {
+  private readonly levelLoader = new LevelLoader();
+  private audioSystem?: AudioSystem;
+  private audioLabel?: Phaser.GameObjects.Text;
+
+  constructor() {
+    super(SceneKeys.Menu);
+  }
+
+  create(): void {
+    this.audioSystem = new AudioSystem(this);
+    this.addBackground();
+
+    this.add.text(GAME_WIDTH / 2, 260, 'Draw Dog', {
+      fontFamily: 'Arial, sans-serif',
+      fontSize: '72px',
+      color: '#3a2b1f',
+      fontStyle: 'bold'
+    }).setOrigin(0.5);
+
+    this.add.text(GAME_WIDTH / 2, 350, 'Draw one line. Protect the dog.', {
+      fontFamily: 'Arial, sans-serif',
+      fontSize: '30px',
+      color: '#604a34'
+    }).setOrigin(0.5);
+
+    this.createButton(GAME_WIDTH / 2, 560, 'Start', () => {
+      this.scene.start(SceneKeys.Level, { levelId: this.levelLoader.getFirstLevelId() });
+    });
+
+    this.createButton(GAME_WIDTH / 2, 690, 'Sound: On', () => {
+      const next = !this.audioSystem?.isEnabled();
+      this.audioSystem?.setEnabled(next);
+      this.audioLabel?.setText(`Sound: ${next ? 'On' : 'Off'}`);
+    }, (label) => {
+      this.audioLabel = label;
+    });
+  }
+
+  private addBackground(): void {
+    this.add.rectangle(GAME_WIDTH / 2, GAME_HEIGHT / 2, GAME_WIDTH, GAME_HEIGHT, 0xf7dc97);
+    this.add.circle(120, 180, 95, 0xfff0bf, 0.45);
+    this.add.rectangle(GAME_WIDTH / 2, 1120, GAME_WIDTH, 320, 0x85c978);
+  }
+
+  private createButton(
+    x: number,
+    y: number,
+    text: string,
+    onClick: () => void,
+    onTextCreated?: (label: Phaser.GameObjects.Text) => void
+  ): void {
+    const button = this.add
+      .rectangle(x, y, 300, 92, 0xffffff)
+      .setStrokeStyle(5, 0x3a2b1f)
+      .setInteractive({ useHandCursor: true });
+    const label = this.add.text(x, y, text, {
+      fontFamily: 'Arial, sans-serif',
+      fontSize: '34px',
+      color: '#3a2b1f',
+      fontStyle: 'bold'
+    }).setOrigin(0.5);
+
+    button.on('pointerdown', onClick);
+    onTextCreated?.(label);
+  }
+}
