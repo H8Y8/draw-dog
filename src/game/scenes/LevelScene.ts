@@ -104,7 +104,11 @@ export class LevelScene extends Phaser.Scene {
 
     this.isFinished = true;
     this.hasStarted = false;
-    this.dog?.setScared(result === 'lose');
+    if (result === 'lose') {
+      this.dog?.setScared(true);
+    } else {
+      this.dog?.setHappy();
+    }
     this.beeSystem?.stop();
     this.audioSystem?.play(result);
     this.game.events.emit(GameEvents.LevelResult, {

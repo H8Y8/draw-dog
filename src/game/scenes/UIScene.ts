@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { AssetKeys } from '../config/assetKeys';
 import { GAME_HEIGHT, GAME_WIDTH } from '../config/gameConfig';
 import { GameEvents, type LevelResultPayload, SceneKeys } from '../types/game';
 
@@ -71,8 +72,8 @@ export class UIScene extends Phaser.Scene {
   private showResult(payload: LevelResultPayload): void {
     this.overlay?.destroy();
 
-    const backing = this.add.rectangle(GAME_WIDTH / 2, GAME_HEIGHT / 2, 500, 390, 0xffffff, 0.96)
-      .setStrokeStyle(5, 0x3a2b1f);
+    const backing = this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, AssetKeys.UiResultPanel)
+      .setDisplaySize(500, 390);
     const title = this.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 130, payload.result === 'win' ? 'Success' : 'Try Again', {
       fontFamily: 'Arial, sans-serif',
       fontSize: '48px',
@@ -85,15 +86,27 @@ export class UIScene extends Phaser.Scene {
       color: '#604a34'
     }).setOrigin(0.5);
 
-    const retry = this.createButton(GAME_WIDTH / 2, GAME_HEIGHT / 2 + 38, 'Retry', () => {
-      this.scene.stop(SceneKeys.UI);
-      this.scene.start(SceneKeys.Level, { levelId: payload.levelId });
-    });
+    const retry = this.createButton(
+      GAME_WIDTH / 2,
+      GAME_HEIGHT / 2 + 38,
+      'Retry',
+      () => {
+        this.scene.stop(SceneKeys.UI);
+        this.scene.start(SceneKeys.Level, { levelId: payload.levelId });
+      },
+      AssetKeys.UiReplayButton
+    );
     const next = payload.result === 'win'
-      ? this.createButton(GAME_WIDTH / 2, GAME_HEIGHT / 2 + 142, 'Next', () => {
-          this.scene.stop(SceneKeys.UI);
-          this.scene.start(SceneKeys.Level, { levelId: payload.nextLevelId });
-        })
+      ? this.createButton(
+          GAME_WIDTH / 2,
+          GAME_HEIGHT / 2 + 142,
+          'Next',
+          () => {
+            this.scene.stop(SceneKeys.UI);
+            this.scene.start(SceneKeys.Level, { levelId: payload.nextLevelId });
+          },
+          AssetKeys.UiNextButton
+        )
       : undefined;
 
     this.overlay = this.add
@@ -101,10 +114,16 @@ export class UIScene extends Phaser.Scene {
       .setDepth(50);
   }
 
-  private createButton(x: number, y: number, label: string, onClick: () => void): Phaser.GameObjects.Container {
-    const rect = this.add
-      .rectangle(x, y, 260, 76, 0xf9cf5d)
-      .setStrokeStyle(4, 0x3a2b1f)
+  private createButton(
+    x: number,
+    y: number,
+    label: string,
+    onClick: () => void,
+    imageKey: string
+  ): Phaser.GameObjects.Container {
+    const image = this.add
+      .image(x, y, imageKey)
+      .setDisplaySize(260, 88)
       .setInteractive({ useHandCursor: true });
     const text = this.add.text(x, y, label, {
       fontFamily: 'Arial, sans-serif',
@@ -113,8 +132,8 @@ export class UIScene extends Phaser.Scene {
       fontStyle: 'bold'
     }).setOrigin(0.5);
 
-    rect.on('pointerdown', onClick);
-    return this.add.container(0, 0, [rect, text]);
+    image.on('pointerdown', onClick);
+    return this.add.container(0, 0, [image, text]);
   }
 
   private shutdown(): void {

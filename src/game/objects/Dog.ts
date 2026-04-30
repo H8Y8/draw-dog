@@ -1,10 +1,11 @@
 import Phaser from 'phaser';
+import { AssetKeys } from '../config/assetKeys';
 
 export class Dog {
   readonly radius = 50;
   readonly body: MatterJS.BodyType;
 
-  private readonly container: Phaser.GameObjects.Container;
+  private readonly image: Phaser.GameObjects.Image;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     this.body = scene.matter.add.circle(x, y, this.radius, {
@@ -13,16 +14,9 @@ export class Dog {
       label: 'dog'
     });
 
-    const face = scene.add.circle(0, 0, 50, 0xf2c879).setStrokeStyle(6, 0x7a4a20);
-    const leftEar = scene.add.ellipse(-42, -28, 34, 58, 0x7a4a20);
-    const rightEar = scene.add.ellipse(42, -28, 34, 58, 0x7a4a20);
-    const leftEye = scene.add.circle(-18, -10, 6, 0x1d1d1d);
-    const rightEye = scene.add.circle(18, -10, 6, 0x1d1d1d);
-    const nose = scene.add.ellipse(0, 12, 22, 16, 0x1d1d1d);
-    const mouth = scene.add.arc(0, 16, 16, 0, 180, false).setStrokeStyle(4, 0x1d1d1d);
-
-    this.container = scene.add
-      .container(x, y, [leftEar, rightEar, face, leftEye, rightEye, nose, mouth])
+    this.image = scene.add
+      .image(x, y, AssetKeys.DogIdle)
+      .setDisplaySize(148, 148)
       .setDepth(5);
   }
 
@@ -35,10 +29,16 @@ export class Dog {
   }
 
   setScared(scared: boolean): void {
-    this.container.setScale(scared ? 1.08 : 1);
+    this.image.setTexture(scared ? AssetKeys.DogScared : AssetKeys.DogIdle);
+    this.image.setScale(scared ? 1.04 : 1);
+  }
+
+  setHappy(): void {
+    this.image.setTexture(AssetKeys.DogHappy);
+    this.image.setScale(1.04);
   }
 
   destroy(): void {
-    this.container.destroy();
+    this.image.destroy();
   }
 }

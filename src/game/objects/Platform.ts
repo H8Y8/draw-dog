@@ -1,10 +1,11 @@
 import Phaser from 'phaser';
+import { AssetKeys } from '../config/assetKeys';
 import type { PlatformData } from '../types/level';
 
 export class Platform {
   readonly body: MatterJS.BodyType;
 
-  private readonly visual: Phaser.GameObjects.Rectangle;
+  private readonly visual: Phaser.GameObjects.Image;
 
   constructor(scene: Phaser.Scene, data: PlatformData) {
     this.body = scene.matter.add.rectangle(data.x, data.y, data.w, data.h, {
@@ -12,10 +13,9 @@ export class Platform {
       label: 'platform',
       restitution: 0.55
     });
-    this.visual = scene.add
-      .rectangle(data.x, data.y, data.w, data.h, 0x7fc47f)
-      .setStrokeStyle(5, 0x47764b)
-      .setDepth(2);
+
+    const key = data.w >= 200 ? AssetKeys.PlatformLong : AssetKeys.PlatformShort;
+    this.visual = scene.add.image(data.x, data.y, key).setDisplaySize(data.w, Math.max(data.h * 2.4, 72)).setDepth(2);
   }
 
   destroy(): void {

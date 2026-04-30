@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { AssetKeys } from '../config/assetKeys';
 import { GAME_HEIGHT, GAME_WIDTH } from '../config/gameConfig';
 import { AudioSystem } from '../systems/AudioSystem';
 import { LevelLoader } from '../systems/LevelLoader';
@@ -32,7 +33,7 @@ export class MenuScene extends Phaser.Scene {
 
     this.createButton(GAME_WIDTH / 2, 560, 'Start', () => {
       this.scene.start(SceneKeys.Level, { levelId: this.levelLoader.getFirstLevelId() });
-    });
+    }, undefined, AssetKeys.UiStartButton);
 
     this.createButton(GAME_WIDTH / 2, 690, 'Sound: On', () => {
       const next = !this.audioSystem?.isEnabled();
@@ -54,12 +55,14 @@ export class MenuScene extends Phaser.Scene {
     y: number,
     text: string,
     onClick: () => void,
-    onTextCreated?: (label: Phaser.GameObjects.Text) => void
+    onTextCreated?: (label: Phaser.GameObjects.Text) => void,
+    imageKey?: string
   ): void {
-    const button = this.add
-      .rectangle(x, y, 300, 92, 0xffffff)
-      .setStrokeStyle(5, 0x3a2b1f)
-      .setInteractive({ useHandCursor: true });
+    const button = imageKey
+      ? this.add.image(x, y, imageKey).setDisplaySize(320, 100)
+      : this.add.rectangle(x, y, 300, 92, 0xffffff).setStrokeStyle(5, 0x3a2b1f);
+    button.setInteractive({ useHandCursor: true });
+
     const label = this.add.text(x, y, text, {
       fontFamily: 'Arial, sans-serif',
       fontSize: '34px',

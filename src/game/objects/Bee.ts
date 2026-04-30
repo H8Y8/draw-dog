@@ -1,9 +1,10 @@
 import Phaser from 'phaser';
+import { AssetKeys } from '../config/assetKeys';
 
 export class Bee {
   readonly body: MatterJS.BodyType;
 
-  private readonly container: Phaser.GameObjects.Container;
+  private readonly image: Phaser.GameObjects.Image;
   private readonly speed: number;
 
   constructor(
@@ -21,13 +22,7 @@ export class Bee {
       frictionStatic: 0
     });
 
-    const leftWing = scene.add.ellipse(-13, -12, 18, 26, 0xd9f7ff, 0.75);
-    const rightWing = scene.add.ellipse(13, -12, 18, 26, 0xd9f7ff, 0.75);
-    const body = scene.add.ellipse(0, 0, 34, 26, 0xffd54a).setStrokeStyle(3, 0x2d2515);
-    const stripeA = scene.add.rectangle(-7, 0, 5, 22, 0x2d2515);
-    const stripeB = scene.add.rectangle(7, 0, 5, 22, 0x2d2515);
-
-    this.container = scene.add.container(x, y, [leftWing, rightWing, body, stripeA, stripeB]).setDepth(4);
+    this.image = scene.add.image(x, y, AssetKeys.Bee).setDisplaySize(72, 72).setDepth(4);
   }
 
   steerToward(targetX: number, targetY: number, time: number): void {
@@ -48,11 +43,11 @@ export class Bee {
   }
 
   syncVisual(): void {
-    this.container.setPosition(this.body.position.x, this.body.position.y);
-    this.container.rotation = this.body.velocity.x * 0.006;
+    this.image.setPosition(this.body.position.x, this.body.position.y);
+    this.image.rotation = this.body.velocity.x * 0.006;
   }
 
   destroy(): void {
-    this.container.destroy();
+    this.image.destroy();
   }
 }
