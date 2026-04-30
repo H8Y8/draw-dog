@@ -22,7 +22,7 @@ export class Bee {
       frictionStatic: 0
     });
 
-    this.image = scene.add.image(x, y, AssetKeys.Bee).setDisplaySize(72, 72).setDepth(4);
+    this.image = scene.add.image(x, y, AssetKeys.Bee).setDisplaySize(60, 60).setDepth(4);
   }
 
   steerToward(targetX: number, targetY: number, time: number): void {

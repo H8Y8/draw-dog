@@ -16,7 +16,7 @@ export class Dog {
 
     this.image = scene.add
       .image(x, y, AssetKeys.DogIdle)
-      .setDisplaySize(148, 148)
+      .setDisplaySize(136, 136)
       .setDepth(5);
   }
 

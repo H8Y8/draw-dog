@@ -59,7 +59,7 @@ export class MenuScene extends Phaser.Scene {
     imageKey?: string
   ): void {
     const button = imageKey
-      ? this.add.image(x, y, imageKey).setDisplaySize(320, 100)
+      ? this.add.image(x, y, imageKey).setDisplaySize(300, 94)
       : this.add.rectangle(x, y, 300, 92, 0xffffff).setStrokeStyle(5, 0x3a2b1f);
     button.setInteractive({ useHandCursor: true });
 

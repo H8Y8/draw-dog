@@ -15,7 +15,9 @@ export class Platform {
     });
 
     const key = data.w >= 200 ? AssetKeys.PlatformLong : AssetKeys.PlatformShort;
-    this.visual = scene.add.image(data.x, data.y, key).setDisplaySize(data.w, Math.max(data.h * 2.4, 72)).setDepth(2);
+    const displayHeight = Math.max(data.h * 1.7, 64);
+    const visualY = data.y + (displayHeight - data.h) / 2;
+    this.visual = scene.add.image(data.x, visualY, key).setDisplaySize(data.w, displayHeight).setDepth(2);
   }
 
   destroy(): void {

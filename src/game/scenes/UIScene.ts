@@ -73,7 +73,7 @@ export class UIScene extends Phaser.Scene {
     this.overlay?.destroy();
 
     const backing = this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, AssetKeys.UiResultPanel)
-      .setDisplaySize(500, 390);
+      .setDisplaySize(480, 374);
     const title = this.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 130, payload.result === 'win' ? 'Success' : 'Try Again', {
       fontFamily: 'Arial, sans-serif',
       fontSize: '48px',
@@ -123,7 +123,7 @@ export class UIScene extends Phaser.Scene {
   ): Phaser.GameObjects.Container {
     const image = this.add
       .image(x, y, imageKey)
-      .setDisplaySize(260, 88)
+      .setDisplaySize(240, 82)
       .setInteractive({ useHandCursor: true });
     const text = this.add.text(x, y, label, {
       fontFamily: 'Arial, sans-serif',
